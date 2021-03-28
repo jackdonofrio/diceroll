@@ -52,8 +52,12 @@ void setup()
     pinMode(A4, INPUT);
 }
 
-int randomN() {
-  return random(1, 7);
+int randomN(int last) {
+  int randomNum = last;
+  while (randomNum == last) {
+    randomNum = random(1,7);
+  }
+  return randomNum;
 }
 
 byte * getPattern(int number) {
@@ -75,13 +79,15 @@ byte * getPattern(int number) {
 
 void rollDie() {
     delay(5);
+    int randomNum = 0;
     for (int i = 0; i < 6; i++) {
-      byte* pattern = getPattern(randomN());
+      randomNum = randomN(randomNum);
+      byte* pattern = getPattern(randomNum);
       for (int j = 0; j < 210; j++) {
         drawScreen(pattern);
       }
     }
-    byte* truePattern = getPattern(randomN());
+    byte* truePattern = getPattern(randomN(randomNum));
     for (int i = 0; i < 3000; i++) {
       drawScreen(truePattern);
     }
